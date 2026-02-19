@@ -20,13 +20,13 @@ router.param('expenseId', validateExpenseId);
 router.get('/', BudgetController.getAll);
 router.get('/:budgetId', BudgetController.getBudgetById);
 router.post('/', validateBudgetInput, BudgetController.create);
-router.put('/:budgetId', validateBudgetInput, BudgetController.update);
-router.delete('/:budgetId', BudgetController.delete); 
+router.put('/:budgetId', validateBudgetInput, BudgetController.updateBudget);
+router.delete('/:budgetId', BudgetController.deleteBudget); 
 
 router.post('/:budgetId/expenses', validateExpenseInput, handleImputErrors, ExpenseController.create);
 router.get('/:budgetId/expenses/:expenseId', validateExpenseInput, handleImputErrors, ExpenseController.getExpenseById);
-router.put('/:budgetId/expenses/:expenseId', validateExpenseInput, handleImputErrors, ExpenseController.update);
-router.delete('/:budgetId/expenses/:expenseId', validateExpenseId, ExpenseController.delete);
+router.put('/:budgetId/expenses/:expenseId', validateExpenseInput, handleImputErrors, ExpenseController.updateExpense);
+router.delete('/:budgetId/expenses/:expenseId', validateExpenseId, ExpenseController.deleteExpense);
 
 
 export default router;

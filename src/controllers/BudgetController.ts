@@ -33,12 +33,12 @@ export class BudgetController {
         res.json(budget)
     }
 
-    static update = async (req: Request, res: Response) => {
+    static updateBudget = async (req: Request, res: Response) => {
        await req.budget.update(req.body);
        res.json({ message: 'Budget updated successfully', budget: req.budget });
     }
 
-    static delete = async (req: Request, res: Response) => {
+    static deleteBudget = async (req: Request, res: Response) => {
         await req.budget.destroy();
        res.json({ message: 'Budget deleted successfully' });
     }

@@ -18,12 +18,12 @@ export class ExpenseController {
         res.json(req.expense)
     }
 
-    static update = async (req: Request, res: Response) => {
+    static updateExpense = async (req: Request, res: Response) => {
        await req.expense.update(req.body);
        res.json({ message: 'Expense updated successfully', expense: req.expense });
     }
 
-    static delete = async (req: Request, res: Response) => {
+    static deleteExpense = async (req: Request, res: Response) => {
         await req.expense.destroy();
        res.json({ message: 'Expense deleted successfully' });
     }

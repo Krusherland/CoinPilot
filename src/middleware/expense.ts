@@ -10,6 +10,16 @@ declare global {
     }
 }
 
+export const ValidateExpense = async (req: Request, res: Response, next: NextFunction) => {
+
+    await param('expenseId').isInt().withMessage("ID must be a valid number").run(req);
+        const errors = validationResult(req);
+            if (!errors.isEmpty()) {
+                return res.status(404).json({ errors: errors.array() });
+            }
+            next();
+}
+
 export const validateExpenseInput = async (req: Request, res: Response, next: NextFunction) => {
 
     await body('name')

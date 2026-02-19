@@ -14,7 +14,7 @@ export const validateBudget = async (req: Request, res: Response, next: NextFunc
     await param('budgetId').isInt().withMessage("ID must be a valid number").run(req);
     const errors = validationResult(req);
         if (!errors.isEmpty()) {
-            return res.status(400).json({ errors: errors.array() });
+            return res.status(404).json({ errors: errors.array() });
         }
         next();
 }

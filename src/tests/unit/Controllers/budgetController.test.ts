@@ -129,9 +129,26 @@ describe('BudgetController.getBudgetById', () => {
             include: [Expense]
         })
     });
+
+    it('should handle errors when fetching budget by ID', async () => {
+        const req = createRequest({
+            method: 'GET',
+            url: '/budgets',
+            budget: {
+                id: '1'
+            }
+        });
+        const res = createResponse();
+        (Budget.findAll as jest.Mock).mockRejectedValue(new Error('Database error'));
+        await BudgetController.getAll(req, res);
+        expect(res.statusCode).toBe(500);
+        const data = res._getJSONData();
+        expect(data).toHaveProperty('message', 'Error fetching budgets');
+        expect(data).toHaveProperty('error');
+    });
 });
 
-describe('BudgetController.update', () => {
+describe('BudgetController.updateBudget', () => {
     it('should update a budget', async () => {
         const mockBudget = {
             update: jest.fn().mockResolvedValue(true)
@@ -147,7 +164,7 @@ describe('BudgetController.update', () => {
          });
         const res = createResponse();
 
-        await BudgetController.update(req, res);
+        await BudgetController.updateBudget(req, res);
 
         const data = res._getJSONData();
         expect(res.statusCode).toBe(200);
@@ -156,7 +173,7 @@ describe('BudgetController.update', () => {
     });
 });
 
-describe('BudgetController.delete', () => {
+describe('BudgetController.deleteBudget', () => {
     it('should delete a budget', async () => {
         const mockBudget = {
             destroy: jest.fn().mockResolvedValue(true)
@@ -168,7 +185,7 @@ describe('BudgetController.delete', () => {
          });
         const res = createResponse();
 
-        await BudgetController.delete(req, res);
+        await BudgetController.deleteBudget(req, res);
 
         const data = res._getJSONData();
         expect(res.statusCode).toBe(200);
